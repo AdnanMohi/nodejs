@@ -1,0 +1,239 @@
+<main class="flex-1 overflow-auto bg-gray-100">
+    <div class="container mx-auto ">
+        <!-- Page Header -->
+        <div class="flex justify-between items-center mb-6 ">
+            <h1 class="text-3xl font-bold text-gray-800">User Management</h1>
+        </div>
+
+        <!-- Users Data Table -->
+        <div
+            class="bg-white p-6 rounded-xl border border-gray-200 flex flex-col w-full max-w-5xl min-w-[500px] h-[500px] mx-auto">
+
+            <!-- Search and Add User Section -->
+            <div class="mb-4 flex justify-between items-center">
+                <div class="w-[400px] relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                        <!-- Heroicon: search -->
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </span>
+                    <input type="text" placeholder="Search by name or email" id="search-input"
+                        class="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 outline-gray-500">
+                </div>
+                <div class="flex justify-end items-center w-[200px]">
+                    <button id="add-user-button"
+                        class="bg-white text-gray-700 px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors flex items-center space-x-2">
+                        <!-- Heroicon: plus -->
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        <span>Add User</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class=" overflow-x-auto">
+                <table class="text-left table-fixed" id="users-table">
+
+                    <!-- Table Header -->
+                    <thead class="sticky top-0 ">
+                        <!-- This version has both the improved styling AND the data-sort attributes -->
+                        <tr
+                            class="border-b border-gray-200 bg-gray-50 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+
+                            <!-- Re-added data-sort and cursor-pointer to the sortable columns -->
+                            <th class="py-3 px-6 cursor-pointer w-1/4" data-sort="name">Name</th>
+                            <th class="py-3 px-6 cursor-pointer w-1/4" data-sort="email">Email</th>
+                            <th class="py-3 px-6 cursor-pointer w-20 border" data-sort="created_at">Joined Date</th>
+
+                            <!-- Status and Actions are not sortable, so they don't get the attributes -->
+                            <th class="py-3 px-6 text-center w-20 border">Status</th>
+                            <th class="py-3 px-6 text-center w-20 border">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="users-table-body" class="text-gray-700">
+                        <!-- The table body will be populated dynamically with user data -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="mt-auto pt-4 border-t border-gray-200 flex justify-between items-center">
+
+                <!-- Pagination Info Text (Left Side) -->
+                <div>
+                    <span id="pagination-info" class="text-sm text-gray-700"></span>
+                </div>
+
+                <!-- Grouped Controls (Right Side) -->
+                <div class="flex items-center space-x-6">
+
+                    <!-- "Items per page" Dropdown -->
+                    <div class="flex items-center space-x-2">
+                        <label for="limit-select" class="text-sm font-medium text-gray-700">Rows per page:</label>
+                        <select id="limit-select"
+                            class="border rounded-md hover:bg-gray-100 outline-gray-500 px-2 text-sm py-1">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+
+                    <!-- Previous/Next Buttons with Icons -->
+                    <div class="flex items-center space-x-2">
+                        <button id="prev-button" title="Previous page"
+                            class="p-1.5 border rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-600">
+                            <span class="sr-only">Previous</span>
+                            <!-- Heroicon: chevron-left -->
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button id="next-button" title="Next page"
+                            class="p-1.5 border rounded-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-600">
+                            <span class="sr-only">Next</span>
+                            <!-- Heroicon: chevron-right -->
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Overlay -->
+            <div id="loading-overlay"
+                class="hidden absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
+                <div class="flex items-center space-x-2 text-gray-500">
+                    <!-- Spinner -->
+                    <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span>Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add User Modal -->
+        <div id="add-user-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+            <div class="relative p-8 border w-full max-w-md shadow-lg rounded-xl bg-white">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Add New User</h3>
+                <form id="add-user-form">
+                    <div class="mb-4">
+                        <label for="add-user-name" class="block text-gray-700 text-sm font-medium mb-2">Name</label>
+                        <input type="text" id="add-user-name" name="name"
+                            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="add-user-email" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+                        <input type="email" id="add-user-email" name="email"
+                            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="add-user-password"
+                            class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                        <input type="password" id="add-user-password" name="password"
+                            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" id="cancel-add-button"
+                            class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md shadow-sm hover:bg-gray-300 focus:outline-none">Cancel</button>
+                        <button type="submit" id="submit-add-user-button"
+                            class="px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none">Add
+                            User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit User Modal -->
+        <div id="edit-user-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+            <div class="relative p-8 border w-full max-w-md shadow-lg rounded-xl bg-white">
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold text-gray-900">Edit User</h3>
+                    <div class="mt-6">
+                        <!-- The form for editing user details -->
+                        <form id="edit-user-form" class="space-y-4">
+                            <!-- Hidden input to store the user ID -->
+                            <input type="hidden" id="edit-user-id">
+
+                            <div class="text-left">
+                                <label for="edit-user-name" class="block text-sm font-medium text-gray-700">Name</label>
+                                <input type="text" id="edit-user-name"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    required>
+                            </div>
+                            <div class="text-left">
+                                <label for="edit-user-email"
+                                    class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="edit-user-email"
+                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    required>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="mt-8 flex justify-end space-x-4">
+                        <button id="cancel-edit-button" type="button"
+                            class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md shadow-sm hover:bg-gray-300 focus:outline-none">Cancel</button>
+                        <button id="save-user-button" type="submit" form="edit-user-form"
+                            class="px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none">Save
+                            Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete User Confirmation Modal -->
+        <div id="delete-user-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+            <div class="relative p-8 border w-full max-w-md shadow-lg rounded-xl bg-white">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                        <!-- Heroicon: exclamation -->
+                        <svg class="h-6 w-6 text-red-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mt-4">Delete User</h3>
+                    <!-- This is where we'll put the confirmation text -->
+                    <p id="delete-confirmation-text" class="mt-2 text-gray-700"></p>
+
+                    <div class="mt-8 flex justify-center space-x-4">
+                        <button id="cancel-delete-button" type="button"
+                            class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md shadow-sm hover:bg-gray-300 focus:outline-none">Cancel</button>
+                        <!-- This button will hold the ID of the user to delete -->
+                        <button id="confirm-delete-button" type="button"
+                            class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
