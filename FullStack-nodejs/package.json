@@ -1,7 +1,7 @@
 {
-  "name": "authentication",
+  "name": "fullstack-nodejs-plainjs-setup",
   "version": "1.0.0",
-  "description": "plain js project setup",
+  "description": "A plain JavaScript setup for Full Stack Node.js development without frameworks like Express.",
   "main": "index.js",
   "type": "module",
   "scripts": {
